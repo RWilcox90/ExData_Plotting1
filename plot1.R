@@ -1,0 +1,6 @@
+head <- read.table("./Week1Project/household_power_consumption.txt", sep=";", nrows = 1, stringsAsFactors = FALSE)
+df <- read.table("./Week1Project/household_power_consumption.txt", sep=";", col.names = head, na.strings = "?", skip=grep("^1/2/2007", readLines("./Week1Project/household_power_consumption.txt"))[1]-1,nrow=length(grep("^1/2/2007|^2/2/2007", readLines("./Week1Project/household_power_consumption.txt"))))
+df$NewDate <- with(df, strptime(paste(Date, Time), format = "%d/%m/%Y %H:%M:%S"))
+png("plot1.png", width = 480, height = 480)
+with(df, hist(Global_active_power, col = "red", main = "Global Active Power", xlab = "Global Active Power (kilowatts)"))
+dev.off()
